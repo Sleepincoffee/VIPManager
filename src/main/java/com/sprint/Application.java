@@ -15,6 +15,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 public class Application {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
+        System.out.print("VIP管理系统启动成功");
     }
 
 }
