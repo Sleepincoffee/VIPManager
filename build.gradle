@@ -9,11 +9,11 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
+apply plugin: 'war'
 apply plugin: 'spring-boot'
 
 jar { 
-	baseName = 'scaffold'
+	baseName = 'vip'
 	version =  '0.1.0'
 }
 
@@ -30,6 +30,8 @@ repositories {
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-devtools'
+    //tomcat
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	//mybatis
 	compile 'com.zaxxer:HikariCP:2.3.+'
 	compile 'mysql:mysql-connector-java:5.1.38' 
