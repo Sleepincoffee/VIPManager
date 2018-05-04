@@ -30,7 +30,8 @@ define(function (require) {
 				'memberPhone': 		this.$(inputs[2]).val(),
 				'memberPassword': 	pswInput,
 				'status': 			status,
-				'money':   			this.$(inputs[3]).val()
+				'money':   			this.$(inputs[3]).val(),
+				'email':			this.$(inputs[4]).val()
 			}
 			this.model = new memberModel(data)
 			this.model.on('sync', function(resp) {

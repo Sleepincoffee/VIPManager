@@ -22,6 +22,8 @@ public class Member {
 	@NotNull
 	private double money;
 
+	private String email;
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -100,6 +102,14 @@ public class Member {
 
 	public double getMoney() {
 		return money;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
 
