@@ -11,9 +11,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+//import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 @SpringBootApplication
-@EnableRedisHttpSession
+//@EnableRedisHttpSession
 public class Application extends SpringBootServletInitializer{
 	
 	//Gradle WAR

@@ -9,12 +9,12 @@ buildscript {
     }
 }
 
-apply plugin: 'war'
+apply plugin: 'java'
 apply plugin: 'spring-boot'
 
 jar { 
 	baseName = 'vip'
-	version =  '0.1.0'
+	version =  '1'
 }
 
 bootRun {
@@ -31,14 +31,14 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-devtools'
     //tomcat
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	//mybatis
 	compile 'com.zaxxer:HikariCP:2.3.+'
 	compile 'mysql:mysql-connector-java:5.1.38' 
 	compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1'
 	//session-redis
-	compile 'org.springframework.session:spring-session-data-redis'
-	compile 'org.springframework.boot:spring-boot-starter-redis'
+	//compile 'org.springframework.session:spring-session-data-redis'
+	//compile 'org.springframework.boot:spring-boot-starter-redis'
 	//swagger2
 	compile 'io.springfox:springfox-swagger2:2.4.0'
 	compile 'io.springfox:springfox-swagger-ui:2.4.0'
