@@ -1,14 +1,26 @@
 package com.sprint.services;
 
-import com.sprint.models.domain.GoodsChangeCount;
-import com.sprint.models.domain.MoneyIn;
-import com.sprint.common.Result;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
-import org.springframework.stereotype.*;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sprint.common.Result;
 import com.sprint.models.dao.ConsumeRecordDao;
 import com.sprint.models.domain.ConsumeRecord;
-import org.springframework.beans.factory.annotation.*;
+import com.sprint.models.domain.GoodsChangeCount;
+import com.sprint.models.domain.Member;
+import com.sprint.models.domain.MemberRank;
 import com.sprint.models.domain.MemberWithoutPwd;
+import com.sprint.models.domain.MoneyIn;
 @Service
 public class ConsumeRecordService {
 	
@@ -43,8 +55,35 @@ public class ConsumeRecordService {
 		System.out.println("zxc");
 		consumeRecordDao.createConsumeRecord(consumeRecord);
 		
+		// 积分增加
+		Member m = memberService.findByID(member.getId());
+		m.setIntegral(m.getIntegral()+consumeMoney);
+		// 等级升级
+		List<MemberRank> ranks = memberRankService.findAll();
+		Map<String,Double> map = new HashMap<>();
+		for(MemberRank rank: ranks){
+			map.put(rank.getMemberRank(), rank.getIntegral());
+		}
+		List<Map.Entry<String,Double>> list=new ArrayList<>();  
+        list.addAll(map.entrySet());  
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+			@Override
+			public int compare(Entry<String, Double> o1, Entry<String, Double> o2) {
+				return o2.getValue().compareTo(o1.getValue());
+			}
+        });
+		
+        for(Map.Entry<String,Double> mapping:list){
+            if(m.getIntegral()>=mapping.getValue()){ 
+            	//升级
+            	m.setMemeberRank(mapping.getKey());
+            	System.out.println("会员"+m.getCardNumber()+"("+m.getMemberName()+")已自动升级为"+mapping.getKey()+"当前积分："+m.getIntegral());
+            	break;
+            }
+       }
+        memberService.updateMember(m);
 	}
-
+	
 	public void updateConsumeRecord(ConsumeRecord consumeRecord) {
 		//卡号--->会员等级--->折扣率
 		Result result = new Result();

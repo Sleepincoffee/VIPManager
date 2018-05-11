@@ -5,11 +5,15 @@
 
 <mapper namespace="com.sprint.models.dao.MemberDao">
 	<insert id="createMember" parameterType="com.sprint.models.domain.Member">
-		insert into member (card_number, member_rank, member_name, member_phone, member_password, status, money)values(#{cardNumber}, #{memberRank}, #{memberName}, #{memberPhone}, #{memberPassword}, #{status}, #{money})
+		insert into member (card_number, member_rank, member_name, member_phone, member_password, status, money, email, integral)values(#{cardNumber}, #{memberRank}, #{memberName}, #{memberPhone}, #{memberPassword}, #{status}, #{money}, #{email}, 0)
 	</insert>
 
 	<select id="findByCardNumber" resultType="com.sprint.models.domain.MemberWithoutPwd">
 		select * from member where card_number = #{cardNumber}
+	</select>
+	
+	<select id="findByID" resultType="com.sprint.models.domain.Member">
+		select * from member where id = #{id}
 	</select>
 	
 	<delete id="deleteMember">
@@ -17,7 +21,7 @@
 	</delete>
 
 	<update id="updateMember">
-		update member set member_rank=#{memberRank}, member_name=#{memberName}, member_phone=#{memberPhone},  money=#{money}, status=#{status} where card_number=#{cardNumber} 
+		update member set member_rank=#{memberRank}, member_name=#{memberName}, member_phone=#{memberPhone},  money=#{money}, status=#{status}, integral=#{integral} where card_number=#{cardNumber} 
 	</update>
 	
 	<select id="findByKey" resultType="com.sprint.models.domain.MemberWithoutPwd">

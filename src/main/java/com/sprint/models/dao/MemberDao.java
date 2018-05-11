@@ -11,6 +11,7 @@ public interface MemberDao {
 	MemberWithoutPwd findByCardNumber(String cardNumber);
 	void deleteMember(int id);
 	void updateMember(Member member);
+	Member findByID(Integer id);
 	List<MemberWithoutPwd> findByKey(String key);
 	List<MemberWithoutPwd> findAll();
 	void updateMoneyIn(MoneyIn moneyIn);

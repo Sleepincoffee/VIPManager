@@ -58,7 +58,8 @@ define(function (require) {
 				'memberName':$('input[name=memberName]').val(),
 				'memberPhone':$('input[name=memberPhone]').val(),
 				'cardType':$('input[name=cardType]').val(),
-				'money':$('input[name=money]').val()
+				'money':$('input[name=money]').val(),
+				'integral':$('input[name=integral]').val(),
 			}
 			this.model.set(data)
 			this.model.save()

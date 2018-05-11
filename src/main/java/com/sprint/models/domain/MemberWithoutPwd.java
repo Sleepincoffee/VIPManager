@@ -11,6 +11,8 @@ public class MemberWithoutPwd {
 	private String memberPhone;
 	private int status;
 	private double money;
+	private String email;
+	private double integral;
 
 	public void setId(int id) {
 		this.id = id;
@@ -82,5 +84,21 @@ public class MemberWithoutPwd {
 
 	public double getMoney() {
 		return money;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public double getIntegral() {
+		return integral;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setIntegral(double integral) {
+		this.integral = integral;
 	}	
 }

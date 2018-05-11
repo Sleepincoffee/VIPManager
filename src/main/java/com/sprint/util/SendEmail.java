@@ -23,8 +23,8 @@ public class SendEmail {
     public static final String HOST = "smtp.163.com";
     public static final String PROTOCOL = "smtp";   
     public static final int PORT = 25;
-    public static final String FROM = "sleepincoffee@163.com";//发件人的email
-    public static final String PWD = "cs123456";//发件人密码
+    public static final String FROM = "ql_chen1997@163.com";//发件人的email
+    public static final String PWD = "cql123456";//发件人密码
     
     /**
      * 获取Session
