@@ -87,8 +87,4 @@ public class SendEmail {
             mex.printStackTrace();
         }
     }
-    public static void main(String[] args) {
-		new SendEmail().send("781503542@qq.com", "555666");
-		new SendEmail().send("781503542@qq.com", "777888");
-	}
 }

@@ -1,6 +1,5 @@
 package com.sprint.ctrls;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.util.Random;
 
@@ -9,13 +8,16 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.thymeleaf.TemplateEngine;
 
 import com.sprint.common.EncodePassword;
 import com.sprint.common.Result;
@@ -31,6 +33,12 @@ public class MemberCtrl {
 	
 	@Autowired
 	private MemberService memberService;
+    
+	@Autowired
+	private JavaMailSender mailSender;
+    @Autowired
+    private TemplateEngine templateEngine;
+    
 	@RequestMapping(value="/member", method=RequestMethod.POST)
 	public Result createMember(@Valid @RequestBody Member member,HttpSession session) {
 		Result result = new Result();
@@ -67,7 +75,7 @@ public class MemberCtrl {
 		        sb.append("</a>");  
 		          
 		        //发送邮件  
-		        new SendEmail().send(email, sb.toString());  
+		        new SendEmail().send(email, sb.toString());
 		        System.out.println("发送邮件"); 
 			}
 		} catch (Exception e) {
@@ -169,7 +177,8 @@ public class MemberCtrl {
 						@RequestParam("validateCode") String validateCode,
 						@RequestParam("cardNumber") String cardNumber,
 						HttpSession session){
-		String url = "http://127.0.0.1:9999/login";
+//		String url = "http://127.0.0.1:9999/login";
+		String url = "http://39.106.172.109:8080/login";
 		Result result = new Result();
 		originCode = originCode.replace("origin", "");
 		if(originCode.equals(validateCode)){
