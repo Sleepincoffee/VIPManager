@@ -1,6 +1,9 @@
 package com.sprint.ctrls;
 
 import java.util.*;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.*;
 import com.sprint.services.ConsumeRecordService;
 import org.springframework.beans.factory.annotation.*;
@@ -79,7 +82,9 @@ public class ConsumeRecordCtrl {
 
 
 	@RequestMapping(value="/consumedRecord", method=RequestMethod.GET)
-	public Result findOrderRecord(String cardNumber) {
+	public Result findOrderRecord(String cardNumber, HttpServletRequest request) {
+		String sessioncardnumber = (String)request.getSession().getAttribute("member");
+		if(sessioncardnumber!=null){cardNumber = sessioncardnumber;}
 		Result result = new Result();
 		if (cardNumber != null && cardNumber.equals("") == false) {
 			result.setResult(consumeRecordService.findByCardNumber(cardNumber));

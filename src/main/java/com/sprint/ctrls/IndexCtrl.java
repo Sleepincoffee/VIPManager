@@ -25,10 +25,10 @@ public class IndexCtrl {
 		return "manage";
 	}
 	
-	@RequestMapping("/member")
+	@RequestMapping("/membermodel")
 	public String memberIndex(HttpServletRequest request) {
-		System.out.println(request.getSession().getAttribute("admin"));
-		return "manage";
+		System.out.println(request.getSession().getAttribute("member"));
+		return "member";
 	}
 
 	@RequestMapping("/member/**")
