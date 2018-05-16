@@ -39,6 +39,7 @@ public class AdminCtrl {
 				admin = adminService.findByAdminAccount(account);
 				if(admin != null) {
 					System.out.println("4");
+					request.getSession().removeAttribute("member");
 					request.getSession().setAttribute("admin", account.getAdminAccount());
 					loginAdmin.setAdminName(admin.getAdminName());
 					loginAdmin.setPremission(admin.getPremission());
@@ -55,6 +56,7 @@ public class AdminCtrl {
 			m.setMemberPassword(account.getAdminPassword());
 			MemberWithoutPwd mem = memberService.findByAccount(m);
 			if(mem != null){
+				request.getSession().removeAttribute("admin");
 				request.getSession().setAttribute("member", account.getAdminAccount());
 				loginAdmin.setAdminName(mem.getMemberName());
 				loginAdmin.setPremission(0);

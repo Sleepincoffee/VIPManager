@@ -109,7 +109,7 @@ public class MemberCtrl {
 		//会员登录所有的操作都值能访问自己的 输入自己的卡号 不能越权
 		String sessioncardnumber = (String)request.getSession().getAttribute("member");
 		if(sessioncardnumber!=null && sessioncardnumber.equals("") == false){
-			if(key.equals(sessioncardnumber) == false){
+			if(key==null || key.equals(sessioncardnumber) == false){
 				result.setStatus(1, "非管理员仅可输入自己卡号！");
 				return result;
 			}
