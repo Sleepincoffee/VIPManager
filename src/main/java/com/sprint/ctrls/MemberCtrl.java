@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -102,9 +103,18 @@ public class MemberCtrl {
 	}
 
 	@RequestMapping(value="/member", method=RequestMethod.GET)
-	public Result findMember(String key) {
-		
+	public Result findMember(String key, HttpServletRequest request) {
+	
 		Result result = new Result();
+		//会员登录所有的操作都值能访问自己的 输入自己的卡号 不能越权
+		String sessioncardnumber = (String)request.getSession().getAttribute("member");
+		if(sessioncardnumber!=null && sessioncardnumber.equals("") == false){
+			if(key.equals(sessioncardnumber) == false){
+				result.setStatus(1, "非管理员仅可输入自己卡号！");
+				return result;
+			}
+		}
+		
 		if(key != null && key.equals("") == false) {
 			result.setResult(memberService.findByKey(key));
 		} else {

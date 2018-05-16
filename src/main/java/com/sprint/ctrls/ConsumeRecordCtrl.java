@@ -70,8 +70,11 @@ public class ConsumeRecordCtrl {
 		return result;
 	}
 	@RequestMapping(value="/consumeRecord", method=RequestMethod.GET)
-	public Result findConsumeRecord(String cardNumber) {
+	public Result findConsumeRecord(String cardNumber, HttpServletRequest request) {
 		Result result = new Result();
+//		会员登录只允许查看自己
+		String sessioncardnumber = (String)request.getSession().getAttribute("member");
+		if(sessioncardnumber!=null){cardNumber = sessioncardnumber;}
 		if (cardNumber != null && cardNumber.equals("") == false) {
 			result.setResult(consumeRecordService.findByCardNumber1(cardNumber));
 		} else {
@@ -83,6 +86,7 @@ public class ConsumeRecordCtrl {
 
 	@RequestMapping(value="/consumedRecord", method=RequestMethod.GET)
 	public Result findOrderRecord(String cardNumber, HttpServletRequest request) {
+//		会员登录只允许查看自己
 		String sessioncardnumber = (String)request.getSession().getAttribute("member");
 		if(sessioncardnumber!=null){cardNumber = sessioncardnumber;}
 		Result result = new Result();
