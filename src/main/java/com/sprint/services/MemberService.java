@@ -30,7 +30,11 @@ public class MemberService {
 	public void updateMember(Member member) {
 		memberDao.updateMember(member);
 	}
-
+	
+	public Member findByID(Integer id){
+		return memberDao.findByID(id);
+	}
+	
 	public List<MemberWithoutPwd> findByKey(String key) {
 		return memberDao.findByKey(key);
 	}

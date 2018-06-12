@@ -52,7 +52,8 @@ define(function(require) {
 				this.status = data.status
 				this.$el.html(mustache.render(template, data))
 			} else {
-				new Tip("该会员不存在")
+				new Tip("信息有误(会员登录仅可使用自己卡号)")
+//				new Tip("该会员不存在")
 			}
 		},
 		confirm () {

@@ -24,6 +24,8 @@ public class Member {
 
 	private String email;
 
+	private double integral;
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -110,6 +112,14 @@ public class Member {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public double getIntegral() {
+		return integral;
+	}
+
+	public void setIntegral(double integral) {
+		this.integral = integral;
 	}
 }
 

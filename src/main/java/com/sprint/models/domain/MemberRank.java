@@ -14,7 +14,9 @@ public class MemberRank {
 	@NotNull
 	@DecimalMax("1.00")
 	private double discount;
-
+	
+	private double integral;
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -53,5 +55,13 @@ public class MemberRank {
 
 	public double getDiscount() {
 		return discount;
+	}
+
+	public double getIntegral() {
+		return integral;
+	}
+
+	public void setIntegral(double integral) {
+		this.integral = integral;
 	}
 }

@@ -1,24 +1,33 @@
 package com.sprint.ctrls;
 
-import javax.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.*;
-import com.sprint.models.domain.Account;
-import com.sprint.services.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.sprint.models.domain.Admin;
-import java.security.MessageDigest;
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-import com.sprint.common.EncodePassword;
-import com.sprint.common.Result;
-import com.sprint.models.domain.AdminWithoutPwd;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sprint.common.EncodePassword;
+import com.sprint.common.Result;
+import com.sprint.models.domain.Account;
+import com.sprint.models.domain.Admin;
+import com.sprint.models.domain.AdminWithoutPwd;
 import com.sprint.models.domain.LoginAdmin;
+import com.sprint.models.domain.Member;
+import com.sprint.models.domain.MemberWithoutPwd;
+import com.sprint.services.AdminService;
+import com.sprint.services.MemberService;
 @RestController
 public class AdminCtrl {
 	
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value="/admin/login", method=RequestMethod.POST)
 	public Result login(@RequestBody Account account, HttpServletRequest request, HttpServletResponse response) {
@@ -30,19 +39,38 @@ public class AdminCtrl {
 				admin = adminService.findByAdminAccount(account);
 				if(admin != null) {
 					System.out.println("4");
+					request.getSession().removeAttribute("member");
 					request.getSession().setAttribute("admin", account.getAdminAccount());
 					loginAdmin.setAdminName(admin.getAdminName());
 					loginAdmin.setPremission(admin.getPremission());
 					loginAdmin.setUrl("/manage");
 					result.setResult(loginAdmin);
 				} else {
-					System.out.println("空");
+					System.out.println("Admin 登录认证失败");
 					result.setStatus(6, "账号密码不匹配");
 				}
+				
+			//会员登陆
+			Member m = new Member();
+			m.setCardNumber(account.getAdminAccount());
+			m.setMemberPassword(account.getAdminPassword());
+			MemberWithoutPwd mem = memberService.findByAccount(m);
+			if(mem != null){
+				request.getSession().removeAttribute("admin");
+				request.getSession().setAttribute("member", account.getAdminAccount());
+				loginAdmin.setAdminName(mem.getMemberName());
+				loginAdmin.setPremission(0);
+				loginAdmin.setUrl("/membermodel");
+				result.setResult(loginAdmin);
+			} else {
+				System.out.println("Member 登录认证失败");
+				result.setStatus(6, "账号密码不匹配");
+			}
 				
 		} catch(Exception e) {
 			System.out.println("encode exception");
 			e.printStackTrace();
+		} finally {
 		}
 		return result;
 	}
